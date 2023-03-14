@@ -19,8 +19,10 @@
         </div>
 
         <div class="mb-3">
-            <label for="content">Content</label>
-            <input type="text" name="content" class="form-control">
+            {{-- <label for="content">Content</label>
+            <input type="text" name="content" class="form-control"> --}}
+            <input id="content" value="Editor content goes here" type="hidden" name="content">
+            <trix-editor input="content"></trix-editor>
         </div>
 
         <div class="mb-3">
@@ -39,3 +41,12 @@
     </div>
 </div>
 @endsection
+
+@section("css")
+    <link rel="stylesheet" type="text/css" href="https://unpkg.com/trix@2.0.0/dist/trix.css">
+@endsection
+
+@section("js")
+    <script type="text/javascript" src="https://unpkg.com/trix@2.0.0/dist/trix.umd.min.js"></script>
+@endsection
+

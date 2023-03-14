@@ -15,6 +15,7 @@
 
     <!-- Scripts -->
     @vite(['resources/sass/app.scss', 'resources/js/app.js'])
+    @yield("css")
 </head>
 <body>
     <div id="app">
@@ -96,5 +97,7 @@
         </main>
         @endauth
     </div>
+
+    @yield("js")
 </body>
 </html>
