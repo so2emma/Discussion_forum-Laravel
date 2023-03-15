@@ -78,39 +78,47 @@
             </div>
         </nav>
 
-        @auth
-            <main class=" container py-4">
-                <div class="row">
-                    <div class="col-md-4">
-                        <div class="d-flex justify-content-end mb-3">
-                            <a href="{{ route('discussions.create') }}" style="width:100%" class="btn btn-success">Add Discussion</a>
-                        </div>
-                        <div class="card">
-                            <div class="card-header">
-                                Channels
-                            </div>
-                            <div class="card-body">
-                                <ul class="list-group">
-                                    @foreach ($channels as $channel)
-                                        <li class="list-group-item">
-                                            {{ $channel->name }}
-                                        </li>
-                                    @endforeach
-                                </ul>
+        @if(!in_array(request()->path(), ["login", "register", "password/email", "password/reset"]))
+            
+        <main class=" container py-4">
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="d-flex justify-content-end mb-3">
+                        @auth
+                        <a href="{{ route('discussions.create') }}" style="width:100%" class="btn btn-success">Add Discussion</a>
+                        
+                        @else
+                        
+                        <a href="{{ route('login') }}" style="width:100%" class="btn btn-success">Sign in to add Discussion</a>
 
-                            </div>
-                        </div>
+                        @endauth
                     </div>
-                    <div class="col-md-8">
-                        @yield('content')
+                    <div class="card">
+                        <div class="card-header">
+                            Channels
+                        </div>
+                        <div class="card-body">
+                            <ul class="list-group">
+                                @foreach ($channels as $channel)
+                                    <li class="list-group-item">
+                                        {{ $channel->name }}
+                                    </li>
+                                @endforeach
+                            </ul>
+
+                        </div>
                     </div>
                 </div>
-            </main>
+                <div class="col-md-8">
+                    @yield('content')
+                </div>
+            </div>
+        </main>
         @else
-            <main class="py-4">
-                @yield('content')
+            <main class="py-4 container">
+                @yield("content")
             </main>
-        @endauth
+        @endif
     </div>
 
     @yield('js')

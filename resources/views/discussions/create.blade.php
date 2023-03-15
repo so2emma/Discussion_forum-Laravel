@@ -21,7 +21,7 @@
         <div class="mb-3">
             {{-- <label for="content">Content</label>
             <input type="text" name="content" class="form-control"> --}}
-            <input id="content" value="Editor content goes here" type="hidden" name="content">
+            <input id="content" placeholder="Editor content goes here" type="hidden" name="content">
             <trix-editor input="content"></trix-editor>
         </div>
 
