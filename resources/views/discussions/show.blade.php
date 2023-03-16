@@ -13,11 +13,34 @@
             {!! $discussion->content !!}
         </div>
     </div>
+    <div class="fw-bold text-center py-5">
+        Replies
+        <hr>
+    </div>
 
+    @foreach ($discussion->replies->paginate(3) as $reply)
+        <div class="card my-3">
+            <div class="card-header">
+                <div class="d-flex justify-content-between">
+                    <div>
+                        <img width="40px" height="40px" style="border-radius: 50%" src="{{ Gravatar::get($reply->owner->email) }}" alt="">
 
-    <div class="card">
+                        <span class="bold">{{ $reply->owner->name }}</span>
+                    </div>
+                </div>
+            </div>
+            <div class="card-body">
+                {!! $reply->content !!}
+            </div>
+        </div>
+    @endforeach
+    {{ $discussion->replies()->paginate(3)->links }}
+
+    <div class="card my-3">
         <div class="card-header">
-            Add a reply
+            <span class="fw-bold">
+                Add a reply
+            </span>
         </div>
         <div class="card-body">
 
@@ -26,8 +49,8 @@
                 @csrf
 
                 <div class="mb-3">
-                    <input id="reply" value="" placeholder="Add a reply" type="hidden" name="reply">
-                    <trix-editor input="reply"></trix-editor>
+                    <input id="content" value="" type="hidden" name="content">
+                    <trix-editor input="content"></trix-editor>
                 </div>
 
 
@@ -43,6 +66,7 @@
             @endauth
         </div>
     </div>
+
 @endsection
 
 @section('css')

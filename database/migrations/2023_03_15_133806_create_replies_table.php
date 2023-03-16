@@ -13,6 +13,9 @@ return new class extends Migration
     {
         Schema::create('replies', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('user_id')->constrained('users');
+            $table->foreignId('discussion_id')->constrained('discussions');
+            $table->string("content");
             $table->timestamps();
         });
     }
