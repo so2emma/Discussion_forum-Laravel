@@ -11,6 +11,24 @@
             </div>
             <hr>
             {!! $discussion->content !!}
+
+            @if ($discussion->bestReply)
+                <div class="card bg-success text-white my-3">
+                    <div class="card-header">
+                        <div class="d-flex justify-content-between">
+                            <div>
+                                <img width="40px" height="40px" style="border-radius: 50%"
+                                    src="{{ Gravatar::get($discussion->bestReply->owner->email) }}" alt="">
+                                <strong>{{ $discussion->bestReply->owner->name }}</strong>
+                            </div>
+                            <div><strong>BEST REPLY</strong></div>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        {!! $discussion->bestReply->content !!}
+                    </div>
+                </div>
+            @endif
         </div>
     </div>
     <div class="fw-bold text-center py-5">
@@ -18,23 +36,35 @@
         <hr>
     </div>
 
-    @foreach ($discussion->replies->paginate(3) as $reply)
+    @foreach ($discussion->replies()->paginate(3) as $reply)
         <div class="card my-3">
             <div class="card-header">
                 <div class="d-flex justify-content-between">
                     <div>
-                        <img width="40px" height="40px" style="border-radius: 50%" src="{{ Gravatar::get($reply->owner->email) }}" alt="">
+                        <img width="40px" height="40px" style="border-radius: 50%"
+                            src="{{ Gravatar::get($reply->owner->email) }}" alt="">
 
                         <span class="bold">{{ $reply->owner->name }}</span>
+                    </div>
+                    <div>
+                        @if (auth()->user()->id == $discussion->user_id)
+                            <form
+                                action="{{ route('discussions.best-reply', ['discussion' => $discussion->slug, 'reply' => $reply->id]) }}"
+                                method="post">
+                                @csrf
+                                <button type="submit" class="btn btn-danger btn-sm">mark as best reply</button>
+                            </form>
+                        @endif
                     </div>
                 </div>
             </div>
             <div class="card-body">
                 {!! $reply->content !!}
+
             </div>
         </div>
     @endforeach
-    {{ $discussion->replies()->paginate(3)->links }}
+    {{ $discussion->replies()->paginate(3)->links() }}
 
     <div class="card my-3">
         <div class="card-header">
@@ -45,28 +75,27 @@
         <div class="card-body">
 
             @auth
-            <form action="{{ route("replies.store", $discussion->slug) }}" method="post">
-                @csrf
+                <form action="{{ route('replies.store', $discussion->slug) }}" method="post">
+                    @csrf
 
-                <div class="mb-3">
-                    <input id="content" value="" type="hidden" name="content">
-                    <trix-editor input="content"></trix-editor>
-                </div>
+                    <div class="mb-3">
+                        <input id="content" value="" type="hidden" name="content">
+                        <trix-editor input="content"></trix-editor>
+                    </div>
 
 
-                <div class="mb-3">
-                    <button class="btn btn-success">
-                        Add reply
-                    </button>
-                </div>
+                    <div class="mb-3">
+                        <button class="btn btn-success">
+                            Add reply
+                        </button>
+                    </div>
 
-            </form>
+                </form>
             @else
-            <a href="{{ route("login") }}" class="btn btn-info">Sign in to add a reply</a>
+                <a href="{{ route('login') }}" class="btn btn-info">Sign in to add a reply</a>
             @endauth
         </div>
     </div>
-
 @endsection
 
 @section('css')

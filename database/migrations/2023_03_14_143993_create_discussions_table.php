@@ -16,6 +16,7 @@ return new class extends Migration
             $table->foreignId('user_id')->constrained('users');
             $table->string("title");
             $table->text("content");
+            $table->integer("reply_id")->nullable();
             $table->string("slug")->unique();
             $table->foreignId('channel_id')->constrained('channels');
             $table->timestamps();
