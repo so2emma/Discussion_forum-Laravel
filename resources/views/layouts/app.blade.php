@@ -37,7 +37,7 @@
                     <ul class="navbar-nav me-auto">
                         @auth
                         <li class="nav-item">
-                            <a href="" class="nav-link">
+                            <a href="{{ route("users.notifications") }}" class="nav-link">
                                 <span class="badge bg-danger">
                                     {{ auth()->user()->unreadNotifications->count() }}
                                     unread notifications

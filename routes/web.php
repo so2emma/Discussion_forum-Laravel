@@ -27,6 +27,6 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 Route::resource("discussions", DiscussionController::class);
 Route::resource("discussions/{discussion}/replies", RepliesController::class);
 
-Route::get("users/notifications", [UserController::class, "notifications"]);
+Route::get("users/notifications", [UserController::class, "notifications"])->name("users.notifications");
 
 Route::post("discussions/{discussion}/replies/{reply}/mark-as-best-reply", [DiscussionController::class, "reply"])->name("discussions.best-reply");
