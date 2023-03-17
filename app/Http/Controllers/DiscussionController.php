@@ -11,7 +11,7 @@ use Illuminate\Support\Str;
 class DiscussionController extends Controller
 {
 
-    public function __construct() 
+    public function __construct()
     {
         $this->middleware("auth")->only(["create", "store"]);
     }
@@ -21,8 +21,8 @@ class DiscussionController extends Controller
      */
     public function index()
     {
-        return view("discussions.index",[ 
-        "discussions" => Discussion::paginate(5)
+        return view("discussions.index",[
+        "discussions" => Discussion::filterByChannels()->paginate(5)
         ]);
     }
 

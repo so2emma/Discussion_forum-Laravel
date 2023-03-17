@@ -15,6 +15,6 @@
             </div>
         </div>
 
-        {{ $discussions->links() }}
+        {{ $discussions->appends(["channel" => request()->qurey("channel")])->links() }}
     @endforeach
 @endsection
