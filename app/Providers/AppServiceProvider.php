@@ -5,6 +5,7 @@ namespace App\Providers;
 use App\Models\Channel;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
+use Illuminate\Pagination\Paginator;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -22,5 +23,8 @@ class AppServiceProvider extends ServiceProvider
     public function boot(): void
     {
         View::share("channels", Channel::all());
+
+        Paginator::useBootstrapFive();
+        Paginator::useBootstrapFour();
     }
 }

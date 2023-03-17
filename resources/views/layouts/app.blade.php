@@ -35,7 +35,16 @@
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <!-- Left Side Of Navbar -->
                     <ul class="navbar-nav me-auto">
-
+                        @auth
+                        <li class="nav-item">
+                            <a href="" class="nav-link">
+                                <span class="badge bg-danger">
+                                    {{ auth()->user()->unreadNotifications->count() }}
+                                    unread notifications
+                                </span>
+                            </a>
+                        </li>
+                        @endauth
                     </ul>
 
                     <!-- Right Side Of Navbar -->
@@ -79,16 +88,16 @@
         </nav>
 
         @if(!in_array(request()->path(), ["login", "register", "password/email", "password/reset"]))
-            
+
         <main class=" container py-4">
             <div class="row">
                 <div class="col-md-4">
                     <div class="d-flex justify-content-end mb-3">
                         @auth
                         <a href="{{ route('discussions.create') }}" style="width:100%" class="btn btn-success">Add Discussion</a>
-                        
+
                         @else
-                        
+
                         <a href="{{ route('login') }}" style="width:100%" class="btn btn-success">Sign in to add Discussion</a>
 
                         @endauth
